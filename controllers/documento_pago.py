@@ -1,6 +1,7 @@
 
 import pprint
 from controllers import tuleap_api, utils
+import re
 
 def obtener_artefactos(parametros):
     parametros["url_base_tuleap"]="https://tuleap.udistrital.edu.co/api/"
@@ -31,4 +32,16 @@ def obtener_artefactos(parametros):
             final_artifacts.extend(utils.filter_json_array(artifacts, parametros["query_filter"]))
         contador_proyectos = contador_proyectos + 1
         print("Porcentaje de proyectos escaneados " + str(contador_proyectos*100/len(project_member_info)) + "%")
+
+    for i, artifact in enumerate(final_artifacts):
+        art_info = tuleap_api.get_artifact_info_tuleap(parametros, artifact["id"])
+        for value in art_info["values"]:
+            try:
+                if value["label"].lower()=="meta":
+                    final_artifacts[i]["meta"]=value["value"]
+                    #print(final_artifacts[i]["meta"])
+                if value["label"].lower()=="indicador":
+                    final_artifacts[i]["indicador"]=value["value"]
+            except Exception as err:
+                pprint.pprint(err)
     return final_artifacts

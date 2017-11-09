@@ -43,6 +43,16 @@ def get_tracker_info_tuleap(parametros, tracker_id):
     # pprint.pprint(tracker_info)
     return tracker_info
 
+def get_artifact_info_tuleap(parametros, artifact_id):
+    request_headers = {"Content-type" : "application/json",
+    "X-Auth-Token":str(parametros["user_data"]["token"]),
+    "X-Auth-UserId":str(parametros["user_data"]["user_id"])}
+    request_url = parametros["url_base_tuleap"]+"artifacts/"+str(artifact_id)+""
+    request = requests.get(url=request_url, headers=request_headers)
+    artifact_info = request.json()
+    # pprint.pprint(artifact_info)
+    return artifact_info
+
 def get_tracker_artifacts(parametros, tracker_id):
     request_headers = {"Content-type" : "application/json",
     "X-Auth-Token":str(parametros["user_data"]["token"]),

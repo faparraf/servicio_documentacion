@@ -54,7 +54,7 @@
                       CUMPLIDO DEL MES:
                   </td>
                   <td>
-                      Agosto de 2017
+                      {{informe.mes}} de {{informe.vigencia}}
                   </td>
                   <td>
                       FECHA DE INICIO DEL CONTRATO:
@@ -98,10 +98,14 @@
                 <td rowspan="{{tamano_actividades}}">{{usuario.contrato.objeto}}</td>
                 {% endif %}
                 <td> {{actividad.title}} </td>
-                <td>  </td>
-                <td>  </td>
-                <td>  </td>
-                <td> {{actividad.id}} </td>
+                <td> {% if 'meta' in actividad %}
+                        {{ actividad.meta }}
+                    {% endif %} </td>
+                <td> {% if 'indicador' in actividad %}
+                        {{ actividad.indicador }}
+                    {% endif %} </td>
+                <td> 100% </td>
+                <td> {{actividad.xref}} </td>
             </tr>
             {% endfor %}
 

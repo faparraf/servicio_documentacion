@@ -48,6 +48,7 @@ parametrosBase = appconf.parametros
 
 @app.route('/documento_mensual/informe_gestion', methods=['POST'])
 def generar_informe_gestion():
+	print("Entra a servicio")
 	"""
 	Funcion para generar el informe de gestion de forma masiva, método POST
 	recibe nombre de usuario y contraseña, ademas de query_filter
@@ -66,19 +67,20 @@ def generar_informe_gestion():
 		#Obtencion de las actividades filtradas con el query filter
 		actividades = documento_pago.obtener_artefactos(parametros)
 		logger.debug("Actividades:")
-		logger.debug(pprint.pformat(actividades))
+		#logger.debug(pprint.pformat(actividades))
 
-	except:
+	except Exception as inst:
 		#Error en la generacion de las actividades
 		logger.error("Error en obtencion de body")
 		actividades = None
+		pprint.pprint(inst)
 
 	if actividades:
 		logger.info("Actividades enviadas")
 		#return jsonify(actividades)
-		identificacion = "1030577784"
+		identificacion = parametros["identificacion"]
 		#Obtencion de la informacion del contratista por medio de los servicios expuestos
-		usuario_data = datos_contratista(identificacion)
+		usuario_data = datos_contratista("1030577784")
 		informe_data = datos_informe()
 
 		logger.info("Plantilla de gestion renderizada")
@@ -198,7 +200,7 @@ def html_to_pdf(path_html, path_pdf, options = None):
 		'page-size': 'Letter',
 		'encoding': "UTF-8",
 		'no-outline': None,
-		'orientation': 'Portrait'
+		'orientation': 'Landscape'
 		}
 	print("Ruta "+path_html)
 	print("PDF  "+path_pdf)
@@ -208,9 +210,9 @@ def datos_informe():
 	informe_data = {}
 	informe_data["dia_inicial"]="01"
 	informe_data["dia_final"]="30"
-	informe_data["mes"]="septiembre"
+	informe_data["mes"]="noviembre"
 	informe_data["vigencia"]="2017"
-	informe_data["dia_informe"]=29
+	informe_data["dia_informe"]=30
 
 	jefe_data={}
 	jefe_data["nombre_completo"]="Beatriz Jaramillo"
