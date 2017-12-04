@@ -4,6 +4,7 @@ from controllers import tuleap_api, utils
 
 def obtener_artefactos(parametros):
     parametros["url_base_tuleap"]="https://tuleap.udistrital.edu.co/api/"
+    target_label = ['indicador','meta']
     project_string_key = "_project"
     user_data = tuleap_api.autenticar_tuleap(parametros)
     parametros["user_data"] = user_data
@@ -31,4 +32,12 @@ def obtener_artefactos(parametros):
             final_artifacts.extend(utils.filter_json_array(artifacts, parametros["query_filter"]))
         contador_proyectos = contador_proyectos + 1
         print("Porcentaje de proyectos escaneados " + str(contador_proyectos*100/len(project_member_info)) + "%")
-    return final_artifacts
+    final_array_artifacts = []
+    for artifact in final_artifacts:
+        tuleap_api.get_tracker_info_tuleap(parametros, artifact['id'])
+        for value in artifact['values']:
+            for target in target_label:
+                if str(value['label']).lower() == str(target).lower(): 
+                    artifact[str(target).lower()] = value['value']
+        final_array_artifacts.extend(artifact)
+    return final_array_artifacts

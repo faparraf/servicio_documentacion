@@ -12,12 +12,12 @@ import logging
 # Definicion de rutas estaticas
 ruta_archivos				= "/srv/http/documentos_mensuales/"
 host_archivos				= "http://127.0.0.1/documentos_mensuales/"
-ruta_assets					= "assets/"
+ruta_assets				= "assets/"
 ruta_servicios				= "http://127.0.0.1:5000/"
 prefijo_cumplido			= "cumplido/"
-prefijo_informe_gestion		= "informe_gestion/"
+prefijo_informe_gestion			= "informe_gestion/"
 template_cumplido			= "cumplido/template_cumplido.html"
-template_informe_gestion	= "informe_gestion/template_informe_gestion.html"
+template_informe_gestion		= "informe_gestion/template_informe_gestion.html"
 
 # create logger
 logger = logging.getLogger('Logger App')
