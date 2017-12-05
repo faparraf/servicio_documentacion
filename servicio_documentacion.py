@@ -68,8 +68,9 @@ def generar_informe_gestion():
 		logger.debug("Actividades:")
 		logger.debug(pprint.pformat(actividades))
 
-	except:
+	except Exception as inst:
 		#Error en la generacion de las actividades
+		logger.error(inst)
 		logger.error("Error en obtencion de body")
 		actividades = None
 
@@ -78,12 +79,12 @@ def generar_informe_gestion():
 		#return jsonify(actividades)
 		identificacion = "1030577784"
 		#Obtencion de la informacion del contratista por medio de los servicios expuestos
-		usuario_data = datos_contratista(identificacion)
+		usuario_data = datos_contratista("1030577784")
 		informe_data = datos_informe()
 
 		logger.info("Plantilla de gestion renderizada")
 		
-		fname = ruta_archivos+prefijo_informe_gestion+informe_data["informe"]["vigencia"]+"/"+informe_data["informe"]["mes"]+"/"+str(identificacion)+".html"
+		fname = ruta_archivos+prefijo_informe_gestion+informe_data["informe"]["vigencia"]+"/"+informe_data["informe"]["mes"]+"/"+str(parametros['identificacion'])+".html"
 
 		# Escritura sobre el archivo
 		with open(fname, 'w') as f:
@@ -208,7 +209,7 @@ def datos_informe():
 	informe_data = {}
 	informe_data["dia_inicial"]="01"
 	informe_data["dia_final"]="30"
-	informe_data["mes"]="septiembre"
+	informe_data["mes"]="diciembre"
 	informe_data["vigencia"]="2017"
 	informe_data["dia_informe"]=29
 

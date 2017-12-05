@@ -9,7 +9,7 @@
     <meta name="created" content="2015-05-14T21:53:44" />
     <meta name="changed" content="2017-08-11T14:26:53.951034717" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='assets/template_cumplido.css') }}">
-    <link rel="stylesheet" type="text/css" href="http://10.20.2.105/documentos_mensuales/assets/template_cumplido.css">
+    <link rel="stylesheet" type="text/css" href="http://10.20.2.145/documentos_mensuales/assets/template_cumplido.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 
@@ -97,11 +97,16 @@
                 {% if loop.index == 1 %}
                 <td rowspan="{{tamano_actividades}}">{{usuario.contrato.objeto}}</td>
                 {% endif %}
-                <td> {{actividad.title}} </td>
+                <td> {{actividad.title}} </td>  
+                <td> 
+                {% if actividad.meta %}
+                  {{actividad.meta}} 
+                {% endif %}</td>
+                <td> {% if actividad.indicador %}
+                {{actividad.indicador}} 
+                {% endif %}</td>
                 <td>  </td>
-                <td>  </td>
-                <td>  </td>
-                <td> {{actividad.id}} </td>
+                <td> {{actividad.xref}} </td>
             </tr>
             {% endfor %}
 

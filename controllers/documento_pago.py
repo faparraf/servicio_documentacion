@@ -34,10 +34,11 @@ def obtener_artefactos(parametros):
         print("Porcentaje de proyectos escaneados " + str(contador_proyectos*100/len(project_member_info)) + "%")
     final_array_artifacts = []
     for artifact in final_artifacts:
-        tuleap_api.get_tracker_info_tuleap(parametros, artifact['id'])
-        for value in artifact['values']:
+        artifact_values = tuleap_api.get_artifact_info_tuleap(parametros, artifact['id'])
+        #pprint.pprint(artifact_values)
+        for value in artifact_values['values']:
             for target in target_label:
                 if str(value['label']).lower() == str(target).lower(): 
                     artifact[str(target).lower()] = value['value']
-        final_array_artifacts.extend(artifact)
+        final_array_artifacts.append(artifact)
     return final_array_artifacts
